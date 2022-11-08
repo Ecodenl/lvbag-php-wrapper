@@ -2,6 +2,7 @@
 
 namespace Ecodenl\LvbagPhpWrapper;
 
+use Ecodenl\LvbagPhpWrapper\Traits\FluentCaller;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
@@ -10,6 +11,8 @@ use GuzzleHttp\Psr7\Request;
 
 class Client
 {
+    use FluentCaller;
+
     protected string $baseUrl = "https://api.bag.acceptatie.kadaster.nl/lvbag/individuelebevragingen/v2/";
 
     private GuzzleClient $client;
@@ -19,9 +22,9 @@ class Client
         $config = [
             'base_uri'        => $baseUrl ?? $this->baseUrl,
             'headers'         => [
-                'Accept'       => 'application/hal+json',
-                'X-Api-Key' => $secret,
-                'Accept-CRS' => $crs
+                'Accept'     => 'application/hal+json',
+                'X-Api-Key'  => $secret,
+                'Accept-CRS' => $crs,
             ],
             'allow_redirects' => false,
         ];

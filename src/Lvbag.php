@@ -3,8 +3,11 @@
 namespace Ecodenl\LvbagPhpWrapper;
 
 use Ecodenl\LvbagPhpWrapper\Resources\AdresUitgebreid;
+use Ecodenl\LvbagPhpWrapper\Traits\FluentCaller;
 
-class Lvbag {
+class Lvbag
+{
+    use FluentCaller;
 
     private Client $client;
 
@@ -18,7 +21,7 @@ class Lvbag {
         return $this->client->get('info');
     }
 
-    public function AdresUitgebreid(): AdresUitgebreid
+    public function adresUitgebreid(): AdresUitgebreid
     {
         return new AdresUitgebreid($this->client, 'adressenuitgebreid');
     }
