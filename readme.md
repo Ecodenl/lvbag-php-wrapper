@@ -1,15 +1,21 @@
-#  LVBAG PHP Api Wrapper
+# LVBAG PHP Api Wrapper
+
 A simple PHP wrapper for IMBAG API (LVBAG)
 
 ## Installing
+
 ```
 composer require ecodenl/lvbag-php-wrapper
 ```
+
 ***
+
 # Using the API
 
 ## Read the official API docs.
-To get a basic understanding of what is possible and what isn't, you should read [the official api docs](https://lvbag.github.io/BAG-API/Technische%20specificatie/#/Adres%20uitgebreid).
+
+To get a basic understanding of what is possible and what isn't, you should
+read [the official api docs](https://lvbag.github.io/BAG-API/Technische%20specificatie/#/Adres%20uitgebreid).
 
 ## Setting up de connection
 
@@ -26,8 +32,10 @@ $client = Client::init($secret, $acceptCRS);
 $lvbag = Lvbag::init($client);
 ```
 
-## Adres uitgebreid
-### Based on given address data 
+### Adres uitgebreid
+
+Based on given address data
+
 ```php
 // Get all available addresses from te given data
 $addresses = $lvbag->adresUitgebreid()
@@ -53,9 +61,33 @@ $address = $lvbag->adresUitgebreid()
     'exacteMatch' => true,
   ]);
 ```
-### Based on the nummeraanduidingIdentificatie
-The nummeraanduidingIdentificatie will be returned from the `->list()` call, this call can be usefull when you need to get the properties again (for whatever reason).
+
+The nummeraanduidingIdentificatie will be returned from the `->list()` call, this call can be usefull when you need to
+get the properties again (for whatever reason).
+
 ```php
 $lvbag->adresUitgebreid()->show('1924200000030235');
+```
+
+### Pagination
+Every list method will return a paginated response:
+
+```php
+// return page 2
+$addresses = $lvbag->adresUitgebreid()
+   ->page(2)
+   ->list([
+      'postcode' => '3255MC',
+      'huisnummer' => 13,
+   ]);
+   
+// Its also possible to change the amount per page.
+$addresses = $lvbag->adresUitgebreid()
+   ->pageSize(12)
+   ->page(2)
+   ->list([
+      'postcode' => '3255MC',
+      'huisnummer' => 13,
+   ]);
 ```
 
