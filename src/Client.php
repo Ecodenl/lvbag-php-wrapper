@@ -8,6 +8,7 @@ use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
+use Psr\Log\LoggerInterface;
 
 class Client
 {
@@ -19,10 +20,12 @@ class Client
 
     private ?GuzzleClient $client = null;
 
-    private bool $shouldLogRequests = false;
+    private ?LoggerInterface $logger;
 
-    public function __construct(string $secret, string $crs, bool $useProductionEndpoint = false)
+    public function __construct(string $secret, string $crs, bool $useProductionEndpoint = false, LoggerInterface $logger = null)
     {
+        $this->logger = $logger;
+
         if ($useProductionEndpoint) {
             $this->baseUrl = 'https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2';
         }
@@ -38,21 +41,17 @@ class Client
         ];
     }
 
-    public function shouldLogRequests(): self
-    {
-        $this->shouldLogRequests = true;
-
-        return $this;
-    }
-
     public function getClient()
     {
         if (is_null($this->client)) {
-            if ($this->shouldLogRequests()) {
+            if ($this->logger instanceof LoggerInterface) {
                 $stack = new HandlerStack();
                 $stack->setHandler(new CurlHandler());
                 $middleware = Middleware::tap(function (Request $request) {
-                    var_dump($request->getRequestTarget());
+                    $this->logger->log(__CLASS__, [
+                        'headers' => $request->getHeaders(),
+                        'queryString' => $request->getUri()->getQuery(),
+                    ]);
                 });
                 $stack->push($middleware);
                 $this->config['handler'] = $stack;
