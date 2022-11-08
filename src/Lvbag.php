@@ -21,7 +21,7 @@ class Lvbag
         return $this->client->get('info');
     }
 
-    public function AdresUitgebreid(): AdresUitgebreid
+    public function adresUitgebreid(): AdresUitgebreid
     {
         return new AdresUitgebreid($this->client, 'adressenuitgebreid');
     }
