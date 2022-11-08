@@ -15,12 +15,20 @@ class Client
 
     protected string $baseUrl = "https://api.bag.acceptatie.kadaster.nl/lvbag/individuelebevragingen/v2/";
 
-    private GuzzleClient $client;
+    private array $config;
 
-    public function __construct(string $secret, string $crs, ?string $baseUrl = null, bool $debugMode = false)
+    private ?GuzzleClient $client = null;
+
+    private bool $shouldLogRequests = false;
+
+    public function __construct(string $secret, string $crs, bool $useProductionEndpoint = false)
     {
-        $config = [
-            'base_uri'        => $baseUrl ?? $this->baseUrl,
+        if ($useProductionEndpoint) {
+            $this->baseUrl = 'https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2';
+        }
+
+        $this->config = [
+            'base_uri'        => $this->baseUrl,
             'headers'         => [
                 'Accept'     => 'application/hal+json',
                 'X-Api-Key'  => $secret,
@@ -28,29 +36,37 @@ class Client
             ],
             'allow_redirects' => false,
         ];
-
-        if ($debugMode) {
-            $stack = new HandlerStack();
-            $stack->setHandler(new CurlHandler());
-            $middleware = Middleware::tap(function (Request $request) {
-                var_dump($request->getRequestTarget());
-            });
-            $stack->push($middleware);
-            $config['handler'] = $stack;
-        }
-
-        $this->client = new GuzzleClient($config);
     }
 
-
-    public function client(): GuzzleClient
+    public function shouldLogRequests(): self
     {
+        $this->shouldLogRequests = true;
+
+        return $this;
+    }
+
+    public function getClient()
+    {
+        if (is_null($this->client)) {
+            if ($this->shouldLogRequests()) {
+                $stack = new HandlerStack();
+                $stack->setHandler(new CurlHandler());
+                $middleware = Middleware::tap(function (Request $request) {
+                    var_dump($request->getRequestTarget());
+                });
+                $stack->push($middleware);
+                $this->config['handler'] = $stack;
+            }
+
+            $this->client = new GuzzleClient($this->config);
+        }
+
         return $this->client;
     }
 
     public function request(string $method, string $uri, array $options = []): array
     {
-        $response = $this->client()->request($method, $uri, $options);
+        $response = $this->getClient()->request($method, $uri, $options);
 
         $contents = $response->getBody()->getContents();
 
