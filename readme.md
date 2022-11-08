@@ -63,7 +63,7 @@ $address = $lvbag->adresUitgebreid()
   ]);
 ```
 
-The nummeraanduidingIdentificatie will be returned from the `->list()` call, this call can be usefull when you need to
+The nummeraanduidingIdentificatie will be returned from the `->list()` call, this call can be useful when you need to
 get the properties again (for whatever reason).
 
 ```php
