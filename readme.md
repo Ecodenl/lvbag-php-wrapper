@@ -12,12 +12,12 @@ composer require ecodenl/lvbag-php-wrapper
 
 # Using the API
 
-## Read the official API docs.
+## Read the official API docs
 
 To get a basic understanding of what is possible and what isn't, you should
 read [the official api docs](https://lvbag.github.io/BAG-API/Technische%20specificatie/#/Adres%20uitgebreid).
 
-## Setting up de connection
+## Setting up the connection
 
 ```php
 use Ecodenl\LvbagPhpWrapper\Client;
