@@ -25,6 +25,7 @@ use Ecodenl\LvbagPhpWrapper\Lvbag;
 use Ecodenl\LvbagPhpWrapper\Resources\AdresUitgebreid;
 
 $secret = 'asecretcodeyouneedtoobtain';
+// crs is not static, you should change it accordingly to the desired call.
 $acceptCRS = 'epsg:28992';
 
 // Establish the connection
