@@ -3,8 +3,11 @@
 namespace Ecodenl\LvbagPhpWrapper;
 
 use Ecodenl\LvbagPhpWrapper\Resources\AdresUitgebreid;
+use Ecodenl\LvbagPhpWrapper\Traits\FluentCaller;
 
-class Lvbag {
+class Lvbag
+{
+    use FluentCaller;
 
     private Client $client;
 
