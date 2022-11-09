@@ -38,7 +38,7 @@ $client = Client::init($secret, $acceptCRS, $shouldUseProductionEndpoint);
 // To get extensive logging from each request
 // the client accepts any logger that follows the (PSR-3 standard)[https://github.com/php-fig/log]
 // This example uses the logger from laravel, but feel free to pass any logger that implements the \Psr\Log\LoggerInterface
-$logger = Log::getLogger()
+$logger = \Illuminate\Support\Facades\Log::getLogger();
 $client = Client::init($secret, $acceptCRS, $shouldUseProductionEndpoint, $logger);
 
 $lvbag = Lvbag::init($client);
