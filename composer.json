@@ -1,0 +1,23 @@
+{
+  "name": "ecodenl/lvbag-php-wrapper",
+  "description": "PHP Wrapper for the LVBAG API ",
+  "type": "library",
+  "license": "OSL-3.0",
+  "authors": [
+    {
+      "name": "Bodhi Looij",
+      "email": "b.looij@wedesignit.nl",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.2.5|^8.0",
+    "guzzlehttp/guzzle": "^6.3.1|^7.4.5",
+    "psr/log": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ecodenl\\LvbagPhpWrapper\\": "src"
+    }
+  }
+}
