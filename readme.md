@@ -2,6 +2,13 @@
 
 A simple PHP wrapper for IMBAG API (LVBAG)
 
+## Version Information
+
+| Package version | API Version | Status                  | PHP Version |
+|:----------------|:------------|:------------------------|:------------|
+| 2.x.x           | 2.x.x       | Active support :rocket: | ^7.4.0 \| ^8.0 |
+
+
 ## Installing
 
 ```
