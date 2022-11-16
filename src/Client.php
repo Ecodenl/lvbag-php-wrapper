@@ -32,7 +32,7 @@ class Client
         $this->logger = $logger;
 
         if ($useProductionEndpoint) {
-            $this->baseUrl = 'https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2';
+            $this->baseUrl = 'https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/';
         }
 
         $this->config = [
