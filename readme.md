@@ -53,6 +53,7 @@ $lvbag = Lvbag::init($client);
 
 ```
 
+## Resources
 ### Adres uitgebreid
 
 Based on given address data
@@ -112,3 +113,30 @@ $addresses = $lvbag->adresUitgebreid()
    ]);
 ```
 
+### Woonplaats
+
+When calling to `adresUitgebreid()`, an address will contain a `woonplaatsIdentificatie`. This identification can be
+used to retrieve info about the city of an address:
+
+```php
+$woonplaatsIdentification = '2134';
+$woonplaats = $lvbag->woonplaats()->show($woonplaatsIdentification);
+
+// Pass attributes as second parameter to retrieve more info
+$woonplaats = $lvbag->woonplaats()->show($woonplaatsIdentification, [
+    // Supports "bronhouders", "geometrie" or "true" (STRING!). "true" returns both.
+    'expand' => 'bronhouders',  
+]);
+
+// This way one can retrieve the municipality of a city. 
+$woonplaats['_embedded']['bronhouders']
+```
+
+In the case one doesn't know the identification, you can still call the list with attributes (pagination applies):
+
+```php
+$woonplaatsen = $lvbag->woonplaats()->list([
+    'naam' => 'Oude-tonge',
+    'expand' => 'bronhouders',  
+]);
+```

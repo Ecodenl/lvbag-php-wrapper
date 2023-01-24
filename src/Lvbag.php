@@ -3,6 +3,7 @@
 namespace Ecodenl\LvbagPhpWrapper;
 
 use Ecodenl\LvbagPhpWrapper\Resources\AdresUitgebreid;
+use Ecodenl\LvbagPhpWrapper\Resources\Woonplaats;
 use Ecodenl\LvbagPhpWrapper\Traits\FluentCaller;
 
 class Lvbag
@@ -24,5 +25,10 @@ class Lvbag
     public function adresUitgebreid(): AdresUitgebreid
     {
         return new AdresUitgebreid($this->client, 'adressenuitgebreid');
+    }
+
+    public function woonplaats(): Woonplaats
+    {
+        return new Woonplaats($this->client, 'woonplaatsen');
     }
 }
