@@ -22,7 +22,7 @@ composer require ecodenl/lvbag-php-wrapper
 ## Read the official API docs
 
 To get a basic understanding of what is possible and what isn't, you should
-read [the official api docs](https://lvbag.github.io/BAG-API/Technische%20specificatie/#/Adres%20uitgebreid).
+read [the official api docs](https://lvbag.github.io/BAG-API/Technische%20specificatie/).
 
 ## Setting up the connection
 
@@ -53,9 +53,11 @@ $lvbag = Lvbag::init($client);
 
 ```
 
+## Resources
 ### Adres uitgebreid
 
-Based on given address data
+[Documentation](https://lvbag.github.io/BAG-API/Technische%20specificatie/#/Adres%20uitgebreid).  
+Based on given address data.
 
 ```php
 // Get all available addresses from te given data
@@ -112,3 +114,31 @@ $addresses = $lvbag->adresUitgebreid()
    ]);
 ```
 
+### Woonplaats
+
+[Documentation](https://lvbag.github.io/BAG-API/Technische%20specificatie/#/Woonplaats).  
+When calling to `adresUitgebreid()`, an address will contain a `woonplaatsIdentificatie`. This identification can be
+used to retrieve info about the city of an address:
+
+```php
+$woonplaatsIdentification = '2134';
+$woonplaats = $lvbag->woonplaats()->show($woonplaatsIdentification);
+
+// Pass attributes as second parameter to retrieve more info
+$woonplaats = $lvbag->woonplaats()->show($woonplaatsIdentification, [
+    // Supports "bronhouders", "geometrie" or "true" (STRING!). "true" returns both.
+    'expand' => 'bronhouders',  
+]);
+
+// This way one can retrieve the municipality of a city. 
+$woonplaats['_embedded']['bronhouders']
+```
+
+In the case one doesn't know the identification, you can still call the list with attributes (pagination applies):
+
+```php
+$woonplaatsen = $lvbag->woonplaats()->list([
+    'naam' => 'Oude-tonge',
+    'expand' => 'bronhouders',  
+]);
+```
