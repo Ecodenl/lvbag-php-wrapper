@@ -2,7 +2,8 @@
 
 namespace Ecodenl\LvbagPhpWrapper\Traits;
 
-trait FluentCaller {
+trait FluentCaller
+{
 
     public static function init()
     {
