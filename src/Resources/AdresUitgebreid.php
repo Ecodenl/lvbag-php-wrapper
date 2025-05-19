@@ -15,10 +15,10 @@ class AdresUitgebreid extends Resource
     /**
      * Returns a list of address(es) from given attributes.
      */
-    public function list(array $attributes): ?array
+    public function list(array $attributes): array
     {
         $response = $this->client->get($this->uri, static::buildQuery($this->paginate() + $attributes));
 
-        return $response['_embedded']['adressen'] ?? null;
+        return $response['_embedded']['adressen'] ?? [];
     }
 }

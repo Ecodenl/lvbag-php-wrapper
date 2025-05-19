@@ -15,10 +15,10 @@ class Woonplaats extends Resource
     /**
      * Returns a list of cities from given attributes.
      */
-    public function list(array $attributes): ?array
+    public function list(array $attributes): array
     {
         $response = $this->client->get($this->uri, static::buildQuery($this->paginate() + $attributes));
 
-        return $response['_embedded']['woonplaatsen'] ?? null;
+        return $response['_embedded']['woonplaatsen'] ?? [];
     }
 }
