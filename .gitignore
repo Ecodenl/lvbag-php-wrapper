@@ -21,3 +21,6 @@ nb-configuration.xml
 
 # OS
 .DS_Store
+
+composer.lock
+composer.phar
