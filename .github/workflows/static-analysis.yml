@@ -1,0 +1,68 @@
+name: Static analysis
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  phpstan:
+    name: PHPStan code analysis [PHP ${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        php: [8.2, 8.3, 8.4]
+        #dependency-version: [ prefer-lowest, prefer-stable ]
+        dependency-version: [ prefer-stable ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl
+          coverage: none
+
+      - name: Copy .env
+        run: php -r "copy('.env.actions', '.env');"
+      - name: Run composer install
+        run: composer install --prefer-dist
+      - name: Run larastan (PHPStan) - Static code analysis
+        run: ./vendor/bin/phpstan analyse --memory-limit=2G
+
+  phpcs:
+    name: PHPcs PSR check [PHP ${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        php: [8.2, 8.3, 8.4]
+        #dependency-version: [ prefer-lowest, prefer-stable ]
+        dependency-version: [ prefer-stable ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl
+          coverage: none
+
+      - name: Copy .env
+        run: php -r "copy('.env.actions', '.env');"
+      - name: Run composer install
+        run: composer install --prefer-dist
+
+      - name: Run phpcs - PSR2 check
+#        run: ./vendor/bin/phpcs --standard=phpcs.xml src # Run with warnings > This will still trigger failure
+        run: ./vendor/bin/phpcs --standard=phpcs.xml src -n # To run errors only
+#        run: ./vendor/bin/phpcs --standard=PSR2 src

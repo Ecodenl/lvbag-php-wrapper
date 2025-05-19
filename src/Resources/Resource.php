@@ -7,7 +7,6 @@ use GuzzleHttp\RequestOptions;
 
 abstract class Resource
 {
-    /** @var Client $client */
     protected Client $client;
 
     protected int $page = 1;

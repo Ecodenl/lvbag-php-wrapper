@@ -27,8 +27,9 @@ class Client
         string $secret,
         string $crs,
         bool $useProductionEndpoint = false,
-        LoggerInterface $logger = null
-    ) {
+        ?LoggerInterface $logger = null
+    )
+    {
         $this->logger = $logger;
 
         if ($useProductionEndpoint) {
@@ -85,5 +86,4 @@ class Client
     {
         return $this->request('GET', $uri, $options);
     }
-
 }

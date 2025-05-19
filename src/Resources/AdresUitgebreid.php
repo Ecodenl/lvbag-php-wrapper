@@ -6,10 +6,6 @@ class AdresUitgebreid extends Resource
 {
     /**
      * Returns specific data about the given identification.
-     *
-     * @param  string  $nummeraanduidingIdentificatie
-     *
-     * @return array
      */
     public function show(string $nummeraanduidingIdentificatie): array
     {
@@ -18,10 +14,6 @@ class AdresUitgebreid extends Resource
 
     /**
      * Returns a list of address(es) from given attributes.
-     *
-     * @param  array  $attributes
-     *
-     * @return array
      */
     public function list(array $attributes): ?array
     {
