@@ -22,5 +22,8 @@ nb-configuration.xml
 # OS
 .DS_Store
 
+# Project files
+.env
+.env.testing
 composer.lock
 composer.phar
