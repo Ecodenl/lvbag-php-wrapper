@@ -25,14 +25,14 @@ abstract class Resource
         return implode('/', [$this->uri, $params]);
     }
 
-    public function page(int $page): self
+    public function page(int $page): static
     {
         $this->page = $page;
 
         return $this;
     }
 
-    public function pageSize(int $pageSize): self
+    public function pageSize(int $pageSize): static
     {
         $this->pageSize = $pageSize;
 
